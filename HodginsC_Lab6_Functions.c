@@ -2,34 +2,93 @@
 //-----------------------------------------------------------------------------
 // Function Name: void push(nodeType* pTop, nodeType* newElement)
 // Description:
-//   This function takes in the current linked list denoted by nodeType* pTop,
+//   This function takes in the stack denoted by stackType stack,
 // and a new node to add to the linked list, and adds the new element to the 
-// top of the list
+// top of the stack
 //
 //-----------------------------------------------------------------------------
-void push(nodeType* pTop, nodeType* newElement){
-    if (pTop == NULL){
-        pTop = newElement;
-        pTop->pNext = NULL;
+void push(stackType** stack, nodeType* newElement){
+    if ((*stack)->pTop == NULL){
+        (*stack)->pTop = newElement;
+        (*stack)->pTop->pNext = NULL;
     }else{
-        newElement->pNext = pTop;
-        pTop = newElement;
+        newElement->pNext = (*stack)->pTop;
+        (*stack)->pTop = newElement;
     }
+}
+
+//-----------------------------------------------------------------------------
+// Function Name: void pop(stackType* stack)
+// Description:
+//   This function takes the stack and removes the top element from the list
+//
+//-----------------------------------------------------------------------------
+void pop(stackType** stack){
+	if((*stack)->pTop == NULL){
+	}else{
+	nodeType* temp = (*stack)->pTop;
+	(*stack)->pTop =(*stack)->pTop->pNext;
+	free(temp);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Function Name: int reuturnPriority(char symbol)
+// Description:
+//   This function takes in a character and returns the priority of the 
+// character
+//
+//-----------------------------------------------------------------------------
+int returnPriority(char symbol){
+	int returnVal;
+	switch(symbol){
+		case '(':
+			returnVal = 0;
+			break;
+		case '+':
+			returnVal = 1;
+			break;
+		case '-':
+			returnVal = 1;
+			break;
+		case '*':
+			returnVal = 2;
+			break;
+		case '/':
+			returnVal = 2;
+			break;
+		default:
+			break;
+	}
+	return returnVal;
 }
 
 //-----------------------------------------------------------------------------
 // Function Name: void pop(nodeType* pTop)
 // Description:
-//   This function takes the input of the current linked list/stack and removes 
-// the top element from the list
+//   This function opens the files of the named files.
 //
 //-----------------------------------------------------------------------------
-void pop(nodeType* pTop){
+void openDataFiles(FILE** inputFile, char* inputName, FILE** outputFile, char* outputName){
+	*inputFile = fopen(inputName, "r");
+	*outputFile = fopen(outputName, "w");
 }
+
+//-----------------------------------------------------------------------------
+// Function Name: void closeDataFiles(nodeType* pTop)
+// Description:
+//   This function closes the opened files
+//
+//-----------------------------------------------------------------------------
+void closeDataFiles(FILE** inputFile, FILE** outputFile){
+	fclose(*inputFile);
+	flcose(*outputFile);
+}
+
 //FOOS FUNCTIONS
 //-----------------------------------------------------------------------------
 // Function Name: PrintHeader
-// Description:
+// Description:	
 //   This function will call the functions needed to print a header to the 
 //  screen. 
 //
