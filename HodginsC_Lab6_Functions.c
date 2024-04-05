@@ -7,14 +7,11 @@
 // top of the stack
 //
 //-----------------------------------------------------------------------------
-void push(stackType** stack, nodeType* newElement){
-    if ((*stack)->pTop == NULL){
-        (*stack)->pTop = newElement;
-        (*stack)->pTop->pNext = NULL;
-    }else{
-        newElement->pNext = (*stack)->pTop;
-        (*stack)->pTop = newElement;
-    }
+void push(stackType* stack, nodeType* newElement){
+    if (newElement != NULL){
+		newElement->pNext = stack->pTop;
+		stack->pTop = newElement;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -23,13 +20,15 @@ void push(stackType** stack, nodeType* newElement){
 //   This function takes the stack and removes the top element from the list
 //
 //-----------------------------------------------------------------------------
-void pop(stackType** stack){
-	if((*stack)->pTop == NULL){
-	}else{
-	nodeType* temp = (*stack)->pTop;
-	(*stack)->pTop =(*stack)->pTop->pNext;
-	free(temp);
+nodeType pop(stackType* stack){
+	nodeType holder;
+	if(stack->pTop != NULL){
+		nodeType* temp = stack->pTop;
+		holder =  *temp;
+		stack->pTop =stack->pTop->pNext;
+		free(temp);
 	}
+	return holder;
 }
 
 //-----------------------------------------------------------------------------
@@ -58,13 +57,14 @@ int returnPriority(char symbol){
 			returnVal = 2;
 			break;
 		default:
+			returnVal = -1;
 			break;
 	}
 	return returnVal;
 }
 
 //-----------------------------------------------------------------------------
-// Function Name: void pop(nodeType* pTop)
+// Function Name: void openDataFiles(nodeType* pTop)
 // Description:
 //   This function opens the files of the named files.
 //
@@ -82,7 +82,7 @@ void openDataFiles(FILE** inputFile, char* inputName, FILE** outputFile, char* o
 //-----------------------------------------------------------------------------
 void closeDataFiles(FILE** inputFile, FILE** outputFile){
 	fclose(*inputFile);
-	flcose(*outputFile);
+	fclose(*outputFile);
 }
 
 //FOOS FUNCTIONS
